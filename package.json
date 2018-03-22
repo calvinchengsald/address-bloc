@@ -1,7 +1,7 @@
 {
   "name": "address-bloc",
   "version": "1.0.0",
-  "description": "",
+  "description": "hold address in database, command line manipulation",
   "main": "app.js",
   "scripts": {
     "test": "export NODE_ENV=test && jasmine"
@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/cookies4cream/address-bloc#readme",
   "dependencies": {
-    "inquirer": "^5.1.0"
+    "inquirer": "^5.1.0",
+    "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.32.6"
   },
   "devDependencies": {
     "jasmine": "^3.1.0"
