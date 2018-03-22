@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/cookies4cream/address-bloc/issues"
   },
-  "homepage": "https://github.com/cookies4cream/address-bloc#readme"
+  "homepage": "https://github.com/cookies4cream/address-bloc#readme",
+  "dependencies": {
+    "inquirer": "^5.1.0"
+  }
 }
