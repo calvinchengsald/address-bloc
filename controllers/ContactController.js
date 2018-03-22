@@ -30,6 +30,17 @@ module.exports = class ContactController{
         }
       }
     ];
+    this.showContactQuestions = [
+      {
+        type: "list",
+        name: "selected",
+        message: "Please choose from the options below",
+        choices: [
+                  "Delete contact",
+                  "Main menu"
+                ]
+      }
+    ];
     this.searchContactQuestions = [
       {
         type: "input",
@@ -38,6 +49,13 @@ module.exports = class ContactController{
         validate(val){
           return val !== "";
         }
+      }
+    ];
+    this.deleteConfirmQuestions = [
+      {
+        type: "confirm",
+        name: "confirmation",
+        message: "are you sure you want to delete this contact?"
       }
     ];
   }
@@ -81,7 +99,7 @@ module.exports = class ContactController{
         where: {name}
     });
   }
-  delete(id){
+  deleteContact(id){
     return Contact.destroy({
         where: {id}
       })

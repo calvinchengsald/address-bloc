@@ -99,21 +99,41 @@ module.exports = class MenuController {
     });
 
   }
+  showContact(contact){
+    console.log(`Found Contact:\n
+    Name: ${contact.name}\n
+    Phone: ${contact.phone}\n
+    Email: ${contact.email}\n
+    `);
+    inquirer.prompt(this.book.showContactQuestions).then((answer) => {
+       switch(answer.selected){
+         case "Delete contact":
+           this.deleteContact(contact);
+           break;
+         case "Main menu":
+           this.main();
+           break;
+         default:
+           console.log("Something went wrong.");
+           this.showContact(contact);
+       }
+     }).catch((err) => {
+       console.log(err);
+       this.showContact(contact);
+     });
+
+  }
   searchContact(){
     this.clear();
     inquirer.prompt(this.book.searchContactQuestions).then((answers) => {
       this.book.search(answers.name).then((contact)=>{
         if(contact){
-          console.log(`Found Contact:\n
-          Name: ${contact.name}\n
-          Phone: ${contact.phone}\n
-          Email: ${contact.email}\n
-          `);
+          this.showContact(contact);
         }
         else {
           console.log(`Contact: ${answers.name} not found`);
+          this.main();
         }
-        this.main();
       }).catch((err) => {
        console.log(err);
        this.main();
@@ -123,5 +143,20 @@ module.exports = class MenuController {
 
   remindMe(){
     return "Learning is a life-long pursuit";
+  }
+  deleteContact(contact){
+    inquirer.prompt(this.book.deleteConfirmQuestions).then((answer) => {
+      if(answer.confirmation){
+        this.book.deleteContact(contact.id);
+        console.log("contact deleted!");
+        this.main();
+      } else {
+        console.log("contact not deleted");
+        this.showContact(contact);
+      }
+    }).catch((err) => {
+      console.log(err);
+      this.main();
+    });
   }
 }
