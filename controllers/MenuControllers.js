@@ -63,4 +63,11 @@ module.exports = class MenuController {
     console.log(date.toLocaleTimeString());
     this.main();
   }
+
+  getContactCount(){
+    return this.contacts.length;
+  }
+  remindMe(){
+    return "Learning is a life-long pursuit";
+  }
 }
