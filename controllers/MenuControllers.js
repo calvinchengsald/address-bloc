@@ -11,6 +11,8 @@ module.exports = class MenuController {
        message: "Please choose from an option below: ",
        choices: [
          "Add new contact",
+         "View all contacts",
+         "Search for a contact",
          "Get Date",
          "Exit",
        ]
@@ -32,6 +34,12 @@ module.exports = class MenuController {
           break;
         case "Get Date":
           this.getDate();
+          break;
+        case "View all contacts":
+          this.getContacts();
+          break;
+        case "Search for a contact":
+          this.searchContact();
           break;
         default:
           console.log("Invalid input");
@@ -70,6 +78,47 @@ module.exports = class MenuController {
     console.log(date.toDateString());
     console.log(date.toLocaleTimeString());
     this.main();
+  }
+
+  getContacts(){
+    this.clear();
+    this.book.getContacts().then((contacts)=> {
+      for( let contact of contacts){
+        console.log(
+          `\n
+          Name: ${contact.name}\n
+          Phone: ${contact.phone}\n
+          Email: ${contact.email}\n
+          ___________________\n`
+        );
+      }
+      this.main();
+    }).catch((error) => {
+      console.log(error);
+      this.main();
+    });
+
+  }
+  searchContact(){
+    this.clear();
+    inquirer.prompt(this.book.searchContactQuestions).then((answers) => {
+      this.book.search(answers.name).then((contact)=>{
+        if(contact){
+          console.log(`Found Contact:\n
+          Name: ${contact.name}\n
+          Phone: ${contact.phone}\n
+          Email: ${contact.email}\n
+          `);
+        }
+        else {
+          console.log(`Contact: ${answers.name} not found`);
+        }
+        this.main();
+      }).catch((err) => {
+       console.log(err);
+       this.main();
+     });
+    });
   }
 
   remindMe(){
